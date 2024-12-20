@@ -3,6 +3,8 @@ from aiogram import Bot, Dispatcher
 
 from bot.handlers.commands import cmd_rt
 
+from db.database import init_db
+
 from common.log_config import LogConfig
 from common.config import load_config
 
@@ -17,8 +19,14 @@ dp = Dispatcher()
 
 
 async def main():
+    # Инициализация базы данных
+    init_db()
+
+    # Включение Роутеров в диспетчер
     dp.include_router(cmd_rt)
+    # Удаляем не обработанные запросы
     await bot.delete_webhook(drop_pending_updates=True)
+    # Запускаем поллинг сервера Telegram
     await dp.start_polling(bot)
 
 try:
