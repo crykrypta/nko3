@@ -18,16 +18,21 @@ cmd_rt = Router()
 @cmd_rt.message(CommandStart())
 async def cmd_start(message: Message):
     if message.from_user is not None:
-        await create_new_user(
+        user = await create_new_user(
             tg_id=message.from_user.id,
             username=message.from_user.full_name
         )
     else:
         logger.warning('Сообщение не содержит информацию о пользователе.')
 
-    await message.answer(
-        text=LEXICON['commands']['start']
-    )
+    if not user.is_member:
+        await message.answer(
+            text=LEXICON['questions']['is_member'],
+            reply_markup=is_member_keyboard)
+    else:
+        await message.answer(
+            text=LEXICON['commands']['start_message']
+        )
 
 
 # /help

@@ -2,6 +2,7 @@ import asyncio
 from aiogram import Bot, Dispatcher
 
 from bot.handlers.commands import cmd_rt
+from bot.handlers.callbacks import callback_rt
 
 from db.database import init_db
 
@@ -24,6 +25,7 @@ async def main():
 
     # Включение Роутеров в диспетчер
     dp.include_router(cmd_rt)
+    dp.include_router(callback_rt)
     # Удаляем не обработанные запросы
     await bot.delete_webhook(drop_pending_updates=True)
     # Запускаем поллинг сервера Telegram

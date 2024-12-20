@@ -1,5 +1,7 @@
 import logging
 
+from sqlalchemy.future import select
+
 from db.models import UsersOrm  # type: ignore
 from db.database import asession  # type: ignore
 
@@ -28,7 +30,7 @@ async def get_user_by_tg_id(tg_id: int) -> UsersOrm | None:
         return user
 
 
-async def create_new_user(tg_id: int, username: str) -> UsersOrm | None:
+async def create_new_user(tg_id: int, username: str) -> UsersOrm:
     """Создает нового пользователя
 
     Args:
@@ -41,17 +43,21 @@ async def create_new_user(tg_id: int, username: str) -> UsersOrm | None:
     """
     async with asession() as session:
         try:
-            user = await session.get(UsersOrm, {'tg_id': tg_id})
+            result = await session.execute(
+                select(UsersOrm).where(UsersOrm.tg_id == tg_id)
+            )
+            user = result.scalars().first()
         except Exception as e:
             logger.error('Не удалось получить пользователя по tg_id: %s | %s', tg_id, e) # noqa
 
         if user is None:
             logger.info('Создание нового пользователя tg_id: %s', tg_id)
-            session.add(
-                UsersOrm(tg_id=tg_id, username=username)
-            )
+
+            user = UsersOrm(tg_id=tg_id, username=username)
+            session.add(user)
             await session.commit()
-            return None
+
+            return user
         else:
             logger.info("Пользователь %s уже есть в базе", user.id)
             return user

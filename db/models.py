@@ -13,6 +13,6 @@ class UsersOrm(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    username: Mapped[str] = mapped_column(String(16), nullable=True)
+    username: Mapped[str | None] = mapped_column(String(16), nullable=True)
     phone_number: Mapped[str] = mapped_column(nullable=True)
-    member: Mapped[bool] = mapped_column(default=False)
+    is_member: Mapped[bool | None] = mapped_column(nullable=True, default=None)
