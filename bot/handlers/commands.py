@@ -7,6 +7,7 @@ from aiogram.types import Message
 from db.requests import create_new_user
 
 from bot.lexicon import LEXICON
+from bot.keyboards import is_member_keyboard
 
 logger = logging.getLogger(__name__)
 
