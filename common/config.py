@@ -13,6 +13,7 @@ class TGBotScheme(BaseModel):
 class Config(BaseModel):
     openai: OpenAIScheme
     tg_bot: TGBotScheme
+    db_url: str
 
 
 def load_config() -> Config:
@@ -25,5 +26,6 @@ def load_config() -> Config:
         ),
         tg_bot=TGBotScheme(
             token=SecretStr(env.str("TG_BOT_TOKEN"))
-        )
+        ),
+        db_url=env.str("DATABASE_URL")
     )
