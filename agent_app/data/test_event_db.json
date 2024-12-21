@@ -1,0 +1,32 @@
+[
+    {
+        "title": "Воркшоп по развитию бизнеса",
+        "description": "Воркшоп, посвященный стратегиям масштабирования вашего бизнеса.",
+        "url": "https://example.com/register/business-growth-workshop",
+        "address": "Москва, ул. Ленина, д. 10"
+    },
+    {
+        "title": "Встреча предпринимателей",
+        "description": "Неформальная встреча предпринимателей для обмена идеями и нетворкинга.",
+        "url": "https://example.com/register/entrepreneur-meetup",
+        "address": "Санкт-Петербург, Невский проспект, д. 25"
+    },
+    {
+        "title": "Семинар по лидерству",
+        "description": "Семинар, направленный на развитие лидерских навыков для бизнес-лидеров.",
+        "url": "https://example.com/register/leadership-training-seminar",
+        "address": "Новосибирск, ул. Советская, д. 15"
+    },
+    {
+        "title": "Вечер стартап-питчей",
+        "description": "Мероприятие, где стартапы могут представить свои идеи потенциальным инвесторам.",
+        "url": "https://example.com/register/startup-pitch-night",
+        "address": "Екатеринбург, проспект Ленина, д. 5"
+    },
+    {
+        "title": "Завтрак для нетворкинга",
+        "description": "Утреннее мероприятие для нетворкинга с другими бизнес-профессионалами за завтраком.",
+        "url": "https://example.com/register/networking-breakfast",
+        "address": "Казань, ул. Баумана, д. 3"
+    }
+]
