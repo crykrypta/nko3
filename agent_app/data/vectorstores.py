@@ -32,7 +32,7 @@ events_chroma = Chroma.from_documents(
     collection_name='events_db',
     documents=documents,
     embedding=OpenAIEmbeddings(api_key=config.openai.token),
-    persist_directory='./agent_вapp/data/events_chroma'
+    persist_directory='./agent_app/data/events_chroma'
 )
 
 
