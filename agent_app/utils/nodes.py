@@ -11,6 +11,8 @@ from langgraph.graph import END
 from langchain_openai.chat_models import ChatOpenAI
 
 from agent_app.data.vectorstores import events_chroma   # type: ignore
+# from agent_app.data.vectorstores import cc_chroma       # type: ignore
+
 from agent_app.utils.state import AgentState            # type: ignore
 from common.config import load_config                   # type: ignore
 
@@ -65,7 +67,7 @@ def supervizor(state: AgentState):
 def event_registration(state: AgentState):
     """Регистрация на мероприятие"""
     query = state["messages"][-1].content
-    events = events_chroma.similarity_search(query, k=1)
+    events = events_chroma.similarity_search(query, k=1)  # type: ignore
     event = events[0]
 
     description = event.page_content
@@ -107,9 +109,19 @@ def event_registration(state: AgentState):
 # --- NODE
 def company_consult(state: AgentState):
     """Консультация по компании"""
+    query = state["messages"][-1].content
+    # docs = cc_chroma.similarity_search(query, k=3)  # type: ignore
+
     # --- SYSTEM PROMPT
     company_consult_system = """Вы — консультант в Telegram чате, задача которого — отвечать на вопросы пользователей о компании."""  # noqa
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", company_consult_system),
+        ("user", "Вопрос пользователя: {query}"),  # noqa
+    ])
 
     # --- LLM
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, api_key=config.openai.token)  # noqa
-    
+    chain = prompt | llm
+    response = chain.invoke({"query": query})
+
+    return Command(update={"messages": [response]}, goto=END)  # type: ignore
