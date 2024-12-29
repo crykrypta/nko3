@@ -32,6 +32,7 @@ async def cmd_start(message: Message):
     else:
         await message.answer(
             text=LEXICON['commands']['start_message']
+            # text = 'Вас приветсвует чат бот НКО "Опора России"!'
         )
 
 
